@@ -88,3 +88,13 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+
+# DS_Store may cause conflict at each individual environment
+**/.DS_Store
+
+# Configuration
+*/*.xcconfig
+*.xcconfig
+
+# PList
+**/*.plist
