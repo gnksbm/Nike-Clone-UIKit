@@ -10,6 +10,7 @@ import UIKit
 class HomeCVHeaderView: UICollectionReusableView {
     let sectiomTitlelabel: UILabel = {
         let label = UILabel()
+        label.font = .systemFont(ofSize: 28, weight: .semibold)
         return label
     }()
     
@@ -24,11 +25,6 @@ class HomeCVHeaderView: UICollectionReusableView {
         super.init(frame: frame)
         configureUI()
     }
-//
-//    convenience init(title: String) {
-//        self.init(frame: .zero)
-//        label.text = title
-//    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

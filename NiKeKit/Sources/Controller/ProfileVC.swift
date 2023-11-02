@@ -8,8 +8,14 @@
 import UIKit
 
 class ProfileVC: UIViewController {
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+}
+
+import SwiftUI
+struct ProfileVC_Preview: PreviewProvider {
+    static var previews: some View {
+        UIKitPreview(selectedIndex: 4)
     }
 }

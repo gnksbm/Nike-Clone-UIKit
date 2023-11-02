@@ -36,7 +36,8 @@ class HomeVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "님, 즐거운 보내고 계신가요?"
+//        navigationController?.topViewController?.title = "님, 즐거운 보내고 계신가요?"
+//        title = "님, 즐거운 보내고 계신가요?"
         navigationController?.navigationBar.prefersLargeTitles = true
         setNavigation()
         configureUI()
@@ -67,7 +68,7 @@ class HomeVC: UIViewController {
 
 extension HomeVC {
     func makeLayout() -> UICollectionViewCompositionalLayout {
-        return .init { index, env in
+        return .init { _, _ in
             let item: NSCollectionLayoutItem
             let group: NSCollectionLayoutGroup
             let section: NSCollectionLayoutSection
@@ -101,11 +102,11 @@ extension HomeVC {
     }
     
     func configureDataSource() {
-        dataSource = .init(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
+        dataSource = .init(collectionView: collectionView, cellProvider: { collectionView, indexPath, _ in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCVCell.identifier, for: indexPath)
             return cell
         })
-        let supplementaryRegistration = UICollectionView.SupplementaryRegistration<HomeCVHeaderView>.init(elementKind: UICollectionView.elementKindSectionHeader) { [weak self] supplementaryView, elementKind, indexPath in
+        let supplementaryRegistration = UICollectionView.SupplementaryRegistration<HomeCVHeaderView>.init(elementKind: UICollectionView.elementKindSectionHeader) { [weak self] supplementaryView, _, indexPath in
             guard let self else {
                 fatalError(#function + ": fail to optional bind")
             }
@@ -114,7 +115,7 @@ extension HomeVC {
             }
             supplementaryView.sectiomTitlelabel.text = sectionKind.sectionTitle
         }
-        dataSource.supplementaryViewProvider = { [weak self] collectionView, elementKind, indexPath in
+        dataSource.supplementaryViewProvider = { [weak self] _, _, indexPath in
             return self?.collectionView.dequeueConfiguredReusableSupplementary(using: supplementaryRegistration, for: indexPath)
         }
         updateSnapshot()
@@ -125,5 +126,12 @@ extension HomeVC {
         snapshot.appendSections(Section.allCases)
 //        snapshot.appendItems([])
         dataSource.apply(snapshot)
+    }
+}
+
+import SwiftUI
+struct HomeVC_Preview: PreviewProvider {
+    static var previews: some View {
+        UIKitPreview(selectedIndex: 0)
     }
 }
