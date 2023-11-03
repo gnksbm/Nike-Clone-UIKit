@@ -33,6 +33,11 @@ enum MainTab: Int, CaseIterable {
             navigationController.tabBarItem = UITabBarItem(title: $0.info.title, image: UIImage(systemName: $0.info.imgName), tag: $0.rawValue)
             navigationController.tabBarItem.selectedImage = UIImage(systemName: $0.info.imgName)
             navigationControllers.append(navigationController)
+            if $0 == .home || $0 == .purchase {
+                let searchItem = UIBarButtonItem(systemItem: .search)
+                searchItem.tintColor = UIColor(named: NikeKitAsset.accentColor.name)
+                navigationController.navigationItem.rightBarButtonItem = searchItem
+            }
         }
         
         return navigationControllers

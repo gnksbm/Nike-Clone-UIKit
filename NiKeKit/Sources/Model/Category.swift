@@ -9,6 +9,13 @@ import Foundation
 
 enum Category: Hashable {
     case shoes(size: [ShoesSize])
+    
+    var toString: String {
+        switch self {
+        case .shoes:
+            return "신발"
+        }
+    }
 }
 
 enum ShoesSize: Hashable {
