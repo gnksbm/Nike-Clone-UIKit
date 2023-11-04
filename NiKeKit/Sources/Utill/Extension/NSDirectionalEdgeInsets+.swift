@@ -9,7 +9,7 @@
 import UIKit
 
 extension NSDirectionalEdgeInsets {
-    static func sameEdge(value: Int) -> Self {
+    static func sameInset(_ value: Int) -> Self {
         Self.init(top: CGFloat(value), leading: CGFloat(value), bottom: CGFloat(value), trailing: CGFloat(value))
     }
 }

@@ -6,23 +6,15 @@
 //
 
 import UIKit
-protocol HomeCell: Hashable { }
+protocol HomeCell: Hashable, Sendable { }
 
 class HomeVC: UIViewController {
-    var dataSource: UICollectionViewDiffableDataSource<HomeSection, Product>!
-    var snapshot: NSDiffableDataSourceSnapshot<HomeSection, Product>!
+    private var dataSource: UICollectionViewDiffableDataSource<HomeSection, String>!
+    private var snapshot: NSDiffableDataSourceSnapshot<HomeSection, String>!
     
-    let viewModel = HomeViewModel()
+    private let viewModel = HomeViewModel()
     
-//    lazy var titleMsgLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = viewModel.titleMessage
-//        label.font = .systemFont(ofSize: UIFont.labelFontSize, weight: .medium)
-//        label.textAlignment = .center
-//        return label
-//    }()
-    
-    lazy var searchBtn: UIButton = {
+    private lazy var searchBtn: UIButton = {
         var config = UIButton.Configuration.plain()
         config.baseForegroundColor = UIColor(named: NikeKitAsset.accentColor.name)
         config.image = UIImage(systemName: "magnifyingglass")
@@ -30,9 +22,9 @@ class HomeVC: UIViewController {
         return btn
     }()
     
-    lazy var collectionView: UICollectionView = {
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: makeLayout())
-        cv.register(ProductCVCell.self, forCellWithReuseIdentifier: ProductCVCell.identifier)
+    private lazy var collectionView: UICollectionView = {
+        let compositionalLayout = makeLayout()
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: compositionalLayout)
         return cv
     }()
     
@@ -44,13 +36,13 @@ class HomeVC: UIViewController {
         viewModel.fetchProducts()
     }
     
-    func setNavigation() {
+    private func setNavigation() {
         let searchItem = UIBarButtonItem(systemItem: .search)
         searchItem.tintColor = UIColor(named: NikeKitAsset.accentColor.name)
         navigationItem.rightBarButtonItem = searchItem
     }
     
-    func configureUI() {
+    private func configureUI() {
         view.backgroundColor = .systemBackground
         navigationController?.isNavigationBarHidden = true
         [searchBtn, collectionView].forEach {
@@ -74,9 +66,10 @@ class HomeVC: UIViewController {
 }
 
 extension HomeVC {
-    func makeLayout() -> UICollectionViewCompositionalLayout {
-        return .init { section, _ in
-            let sectionKind = HomeSection.allCases[section]
+    private func makeProductLayout() -> UICollectionViewCompositionalLayout {
+        return .init { index, _ in
+            let sectionKind = HomeSection.allCases[index]
+            
             let item = NSCollectionLayoutItem(
                 layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
@@ -85,75 +78,175 @@ extension HomeVC {
             )
             let group = NSCollectionLayoutGroup.horizontal(
                 layoutSize: .init(
-                    widthDimension: .fractionalWidth(0.45),
-                    heightDimension: .estimated(.screenHeight / 2.5)
+                    widthDimension: .fractionalWidth(0.4),
+                    heightDimension: .estimated(.screenHeight / 2.8)
                 ), subitems: [item]
             )
-            group.contentInsets = .sameEdge(value: 5)
+            group.contentInsets = .sameInset(5)
+            let section = NSCollectionLayoutSection(group: group)
             let headerSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
-                    heightDimension: .estimated(.screenHeight / 10)
+                    heightDimension: .estimated(50)
                 ),
                 elementKind: UICollectionView.elementKindSectionHeader,
                 alignment: .top
             )
-            headerSupplementary.contentInsets = .init(top: 20, leading: 20, bottom: 20, trailing: 10)
-            let section = NSCollectionLayoutSection(group: group)
-            section.boundarySupplementaryItems = [headerSupplementary]
-            section.contentInsets = .init(top: 20, leading: 10, bottom: 0, trailing: 0)
+            headerSupplementary.contentInsets = .init(top: 20, leading: 5, bottom: 20, trailing: 10)
+            section.boundarySupplementaryItems.append(headerSupplementary)
+            section.contentInsets = .init(top: 20, leading: 20, bottom: 0, trailing: 0)
             section.orthogonalScrollingBehavior = .continuous
             return section
         }
     }
-    
-    func configureDataSource() {
-        let cellRegistration = makeCellRegistration()
-        dataSource = .init(collectionView: collectionView, cellProvider: { collectionView, indexPath, product in
-            let cell = collectionView.dequeueConfiguredReusableCell(using: cellRegistration, for: indexPath, item: product)
-            return cell
-        })
-        let supplementaryRegistration = UICollectionView.SupplementaryRegistration<HomeCVHeaderView>.init(elementKind: UICollectionView.elementKindSectionHeader) { supplementaryView, _, indexPath in
-            let sectionKind = HomeSection.allCases[indexPath.section]
-            supplementaryView.section = sectionKind
-            supplementaryView.configureUI()
-            supplementaryView.msgLabel.text = self.viewModel.titleMessage
-            supplementaryView.titlelabel.text = sectionKind.header.title
-            if let subtitle = sectionKind.header.subTitle {
-                supplementaryView.subTitlelabel.text = subtitle
+    private func makeLayout() -> UICollectionViewCompositionalLayout {
+        return .init { index, _ in
+            let sectionKind = HomeSection.allCases[index]
+            let item = NSCollectionLayoutItem(
+                layoutSize: .init(
+                    widthDimension: .fractionalWidth(1),
+                    heightDimension: .fractionalHeight(1)
+                )
+            )
+            var group: NSCollectionLayoutGroup
+            var section: NSCollectionLayoutSection
+            switch sectionKind {
+            case .recommend, .relation:
+                group = NSCollectionLayoutGroup.horizontal(
+                    layoutSize: .init(
+                        widthDimension: .fractionalWidth(0.4),
+                        heightDimension: .estimated(.screenHeight / 2.8)
+                    ), subitems: [item]
+                )
+                group.contentInsets = .sameInset(5)
+                section = NSCollectionLayoutSection(group: group)
+                section.contentInsets = .init(top: 20, leading: 20, bottom: 0, trailing: 0)
+                section.orthogonalScrollingBehavior = .continuous
+            case .event:
+                item.contentInsets = .sameInset(5)
+                group = NSCollectionLayoutGroup.horizontal(
+                    layoutSize: .init(
+                        widthDimension: .fractionalWidth(0.9),
+                        heightDimension: .estimated(.screenHeight / 6)
+                    ), subitems: [item]
+                )
+                section = NSCollectionLayoutSection(group: group)
+                section.orthogonalScrollingBehavior = .groupPaging
+                section.contentInsets = .init(top: .screenWidth / 6,
+                                              leading: .screenWidth / 20,
+                                              bottom: .screenWidth / 10,
+                                              trailing: .screenWidth / 20)
+            case .news:
+                group = NSCollectionLayoutGroup.horizontal(
+                    layoutSize: .init(
+                        widthDimension: .fractionalWidth(0.4),
+                        heightDimension: .estimated(.screenHeight / 2.8)
+                    ), subitems: [item]
+                )
+                group.contentInsets = .sameInset(5)
+                section = NSCollectionLayoutSection(group: group)
+                section.orthogonalScrollingBehavior = .continuous
+            case .inspiration:
+                group = NSCollectionLayoutGroup.horizontal(
+                    layoutSize: .init(
+                        widthDimension: .fractionalWidth(0.4),
+                        heightDimension: .estimated(.screenHeight / 2.8)
+                    ), subitems: [item]
+                )
+                section = NSCollectionLayoutSection(group: group)
+                section.orthogonalScrollingBehavior = .continuous
             }
-            supplementaryView.showBtn.setTitle("모두 보기", for: .normal)
+            if sectionKind != .event {
+                let headerSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
+                    layoutSize: .init(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .estimated(50)
+                    ),
+                    elementKind: UICollectionView.elementKindSectionHeader,
+                    alignment: .top
+                )
+                headerSupplementary.contentInsets = .init(top: 20, leading: 5, bottom: 20, trailing: 10)
+                section.boundarySupplementaryItems.append(headerSupplementary)
+            }
+            return section
         }
-        dataSource.supplementaryViewProvider = { [weak self] _, _, indexPath in
-            return self?.collectionView.dequeueConfiguredReusableSupplementary(using: supplementaryRegistration, for: indexPath)
+    }
+    
+    private func configureDataSource() {
+        let productConfig = productCVCellRegistration()
+        let eventConfig = eventCVCellRegistration()
+        dataSource = .init(collectionView: collectionView) { collectionView, indexPath, id in
+            switch HomeSection.allCases[indexPath.section] {
+            case .recommend, .relation:
+                let cell = collectionView.dequeueConfiguredReusableCell(using: productConfig, for: indexPath, item: id)
+                return cell
+            case .event:
+                let cell = collectionView.dequeueConfiguredReusableCell(using: eventConfig, for: indexPath, item: id)
+                return cell
+            case .news:
+                let cell = collectionView.dequeueConfiguredReusableCell(using: productConfig, for: indexPath, item: id)
+                return cell
+            case .inspiration:
+                let cell = collectionView.dequeueConfiguredReusableCell(using: productConfig, for: indexPath, item: id)
+                return cell
+            }
+        }
+        let headerRegistration = UICollectionView.SupplementaryRegistration<HomeCVHeaderView>.init(elementKind: UICollectionView.elementKindSectionHeader) { header, _, indexPath in
+            let sectionKind = HomeSection.allCases[indexPath.section]
+            header.section = sectionKind
+            header.configureUI()
+            header.msgLabel.text = self.viewModel.titleMessage
+            header.titleLabel.text = sectionKind.header.title
+            if let subtitle = sectionKind.header.subTitle {
+                header.subTitleLabel.text = subtitle
+            }
+            header.showBtn.setTitle("모두 보기", for: .normal)
+        }
+        dataSource.supplementaryViewProvider = { _, _, indexPath in
+            return self.collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
         }
         updateSnapshot()
     }
     
-    func makeCellRegistration() -> UICollectionView.CellRegistration<ProductCVCell, Product> {
-        return UICollectionView.CellRegistration<ProductCVCell, Product> { cell, indexPath, product in
-            switch HomeSection.allCases[indexPath.section] {
+    private func productCVCellRegistration() -> UICollectionView.CellRegistration<ProductCVCell, String> {
+        return .init { cell, _, id in
+            let product = self.viewModel.products.first(where: { $0.id == id })
+            if let image = product?.images.first {
+                cell.imageView.image = image
+            }
+            cell.titleLabel.text = product?.productName
+            cell.categoryLabel.text = product?.category.toString
+            cell.priceLabel.text = product?.price.toPriceStr
+        }
+    }
+    
+    private func eventCVCellRegistration() -> UICollectionView.CellRegistration<EventCVCell, String> {
+        return .init { cell, _, id in
+            let event = self.viewModel.events.first(where: { $0.id == id })
+                cell.imageView.image = event?.image
+            cell.titleLabel.text = event?.title
+            cell.contentLabel.text = event?.content
+        }
+    }
+    
+    private func updateSnapshot() {
+        snapshot = .init()
+        let section = HomeSection.allCases
+        snapshot.appendSections(section)
+        section.forEach {
+            switch $0 {
             case .recommend:
-                if let image = product.images.first {
-                    cell.imageView.image = image
-                }
-                cell.titleLabel.text = product.productName
-                cell.categoryLabel.text = product.category.toString
-                cell.priceLabel.text = product.price.toPriceStr
+                snapshot.appendItems(self.viewModel.recommendedProducts.map({ $0.id }), toSection: $0)
+            case .event:
+                snapshot.appendItems(self.viewModel.events.map({ $0.id }), toSection: $0)
             case .news:
                 break
             case .relation:
-                break
+                snapshot.appendItems(self.viewModel.relationProducts.map({ $0.id }), toSection: $0)
             case .inspiration:
                 break
             }
         }
-    }
-    
-    func updateSnapshot() {
-        snapshot = .init()
-        snapshot.appendSections(HomeSection.allCases)
-        snapshot.appendItems(self.viewModel.products, toSection: .recommend)
         dataSource.apply(snapshot)
     }
 }

@@ -11,6 +11,8 @@ class ProductCVCell: UICollectionViewCell {
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "progress")
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 8
         return imageView
     }()
     
@@ -30,7 +32,7 @@ class ProductCVCell: UICollectionViewCell {
     
     let categoryLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: UIFont.labelFontSize, weight: .medium)
+        label.font = .systemFont(ofSize: UIFont.labelFontSize, weight: .regular)
         label.textColor = .darkGray
         return label
     }()

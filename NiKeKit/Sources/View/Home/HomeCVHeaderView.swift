@@ -16,13 +16,13 @@ class HomeCVHeaderView: UICollectionReusableView {
         return label
     }()
     
-    let titlelabel: UILabel = {
+    let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: UIFont.labelFontSize, weight: .medium)
         return label
     }()
     
-    let subTitlelabel: UILabel = {
+    let subTitleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: UIFont.labelFontSize, weight: .medium)
         label.textColor = .darkGray
@@ -60,7 +60,7 @@ class HomeCVHeaderView: UICollectionReusableView {
     func configureUI() {
         switch section {
         case .recommend:
-            [titlelabel, subTitlelabel].forEach {
+            [titleLabel, subTitleLabel].forEach {
                 titleStackView.addArrangedSubview($0)
             }
             [msgLabel, titleStackView, showBtn].forEach {
@@ -81,10 +81,12 @@ class HomeCVHeaderView: UICollectionReusableView {
                 showBtn.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             ])
             return
+        case .event:
+            break
         case .news, .inspiration:
-            titleStackView.addArrangedSubview(titlelabel)
+            titleStackView.addArrangedSubview(titleLabel)
         case .relation:
-            [titlelabel, subTitlelabel].forEach {
+            [titleLabel, subTitleLabel].forEach {
                 titleStackView.addArrangedSubview($0)
             }
             titleStackView.translatesAutoresizingMaskIntoConstraints = false

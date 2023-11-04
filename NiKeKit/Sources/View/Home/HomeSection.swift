@@ -8,13 +8,15 @@
 
 import Foundation
 
-enum HomeSection: Int, CaseIterable {
-    case recommend, news, relation, inspiration
+enum HomeSection: CaseIterable {
+    case recommend, event, news, relation, inspiration
     
     var header: Header {
         switch self {
         case .recommend:
             return .init(title: "맞춤 추천 제품", subTitle: "추천 제품")
+        case .event:
+            return .init(title: "", subTitle: "")
         case .news:
             return .init(title: "나이키 소식")
         case .relation:
