@@ -1,5 +1,5 @@
 //
-//  EventCVCell.swift
+//  EventCell.swift
 //  NikeKit
 //
 //  Created by gnksbm on 2023/11/03.
@@ -7,7 +7,7 @@
 //
 
 import UIKit
-class EventCVCell: UICollectionViewCell {
+class EventCell: UICollectionViewCell {
     let imageView: UIImageView = {
         let imageView = UIImageView()
         return imageView
@@ -23,6 +23,7 @@ class EventCVCell: UICollectionViewCell {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: UIFont.labelFontSize, weight: .medium)
+        label.textColor = .black
         label.numberOfLines = 2
         return label
     }()
@@ -79,7 +80,7 @@ class EventCVCell: UICollectionViewCell {
 }
 
 import SwiftUI
-struct EventCVCell_Preview: PreviewProvider {
+struct EventCell_Preview: PreviewProvider {
     static var previews: some View {
         UIKitPreview(selectedIndex: 0)
     }

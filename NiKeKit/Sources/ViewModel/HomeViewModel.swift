@@ -11,6 +11,8 @@ import Foundation
 final class HomeViewModel {
     private(set) var products: [Product] = []
     private(set) var events: [Event] = []
+    private(set) var news: [News] = []
+    private(set) var magazines: [Magazine] = []
     
     var recommendedProducts: [Product] {
         products.suffix(3)
@@ -19,6 +21,7 @@ final class HomeViewModel {
     var relationProducts: [Product] {
         Array(products.prefix(3))
     }
+    
     private var onComplete: () -> Void = { }
     
     var titleMessage: String {
@@ -47,6 +50,8 @@ final class HomeViewModel {
     func fetchProducts() {
         products = [.sample1, .sample2, .sample3, .sample4, .sample5, .sample6]
         events = [.sample1, .sample2]
+        news = [.sample1, .sample2]
+        magazines = [.sample1, .sample2, .sample3]
         onComplete()
     }
     

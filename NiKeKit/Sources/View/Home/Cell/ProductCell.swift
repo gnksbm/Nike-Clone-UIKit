@@ -1,5 +1,5 @@
 //
-//  ProductCVCell.swift
+//  ProductCell.swift
 //  NiKeKit
 //
 //  Created by gnksbm on 2023/09/05.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProductCVCell: UICollectionViewCell {
+class ProductCell: UICollectionViewCell {
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "progress")
@@ -57,24 +57,24 @@ class ProductCVCell: UICollectionViewCell {
             stackView.addArrangedSubview($0)
         }
         [imageView, stackView].forEach {
-            self.addSubview($0)
+            contentView.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
         NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: self.topAnchor),
-            imageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            imageView.widthAnchor.constraint(equalTo: self.widthAnchor),
-            imageView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.7),
+            imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            imageView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            imageView.heightAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 1.3),
             
             stackView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
-            stackView.widthAnchor.constraint(equalTo: self.widthAnchor),
+            stackView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
         ])
     }
 }
 
 import SwiftUI
-struct ProductCVCell_Preview: PreviewProvider {
+struct ProductCell_Preview: PreviewProvider {
     static var previews: some View {
         UIKitPreview(selectedIndex: 0)
     }
