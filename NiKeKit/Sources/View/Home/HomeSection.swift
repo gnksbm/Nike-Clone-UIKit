@@ -9,7 +9,7 @@
 import Foundation
 
 enum HomeSection: CaseIterable {
-    case recommend, event, news, relation, magazine
+    case recommend, event, news, relation, magazine, last
     
     var header: Header {
         switch self {
@@ -23,6 +23,8 @@ enum HomeSection: CaseIterable {
             return .init(title: "연관 제품", subtitle: "라이프스타일")
         case .magazine:
             return .init(title: "영감을 주는 스토리")
+        case .last:
+            return .init(title: "함께해 주셔서 감사합니다.")
         }
     }
 }

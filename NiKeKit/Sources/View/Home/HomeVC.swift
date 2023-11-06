@@ -81,7 +81,7 @@ extension HomeVC {
             )
             var group: NSCollectionLayoutGroup
             var section: NSCollectionLayoutSection
-            let headerSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
+            var headerSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
                     heightDimension: .estimated(100)
@@ -179,6 +179,32 @@ extension HomeVC {
                                                           trailing: 10)
                 let decorationView = NSCollectionLayoutDecorationItem.background(elementKind: MagazineBackgroundView.identifier)
                 section.decorationItems = [decorationView]
+                let footerSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
+                    layoutSize: .init(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .estimated(100)
+                    ),
+                    elementKind: UICollectionView.elementKindSectionFooter,
+                    alignment: .bottom
+                )
+                section.boundarySupplementaryItems.append(footerSupplementary)
+            case .last:
+                group = .horizontal(
+                    layoutSize: .init(
+                        widthDimension: .fractionalWidth(0),
+                        heightDimension: .fractionalWidth(0)
+                    ), subitems: [item]
+                )
+//                group.contentInsets = .init(top: 5, leading: 0, bottom: 0, trailing: 0)
+                headerSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
+                    layoutSize: .init(
+                        widthDimension: .fractionalWidth(1),
+                        heightDimension: .estimated(200)
+                    ),
+                    elementKind: UICollectionView.elementKindSectionHeader,
+                    alignment: .top
+                )
+                section = .init(group: group)
             }
             if sectionKind != .event {
                 section.boundarySupplementaryItems.append(headerSupplementary)
@@ -209,6 +235,9 @@ extension HomeVC {
             case .magazine:
                 let cell = collectionView.dequeueConfiguredReusableCell(using: magazineReg, for: indexPath, item: id)
                 return cell
+            case .last:
+                let cell = collectionView.dequeueConfiguredReusableCell(using: magazineReg, for: indexPath, item: id)
+                return cell
             }
         }
         let homeHeaderReg = homeHeaderRegistration()
@@ -216,7 +245,8 @@ extension HomeVC {
         let relationHeaderReg = relationHeaderRegistration()
         let magazineHeaderReg = magazineHeaderRegistration()
         let magazineFooterReg = magazineFooterRegistration()
-        dataSource.supplementaryViewProvider = { _, _, indexPath in
+        let lastHeaderReg = lastHeaderRegistration()
+        dataSource.supplementaryViewProvider = { _, kind, indexPath in
             let sectionKind = HomeSection.allCases[indexPath.section]
             switch sectionKind {
             case .recommend:
@@ -224,7 +254,13 @@ extension HomeVC {
             case .relation:
                 return self.collectionView.dequeueConfiguredReusableSupplementary(using: relationHeaderReg, for: indexPath)
             case .magazine:
-                return self.collectionView.dequeueConfiguredReusableSupplementary(using: magazineHeaderReg, for: indexPath)
+                if kind == UICollectionView.elementKindSectionHeader {
+                    return self.collectionView.dequeueConfiguredReusableSupplementary(using: magazineHeaderReg, for: indexPath)
+                } else {
+                    return self.collectionView.dequeueConfiguredReusableSupplementary(using: magazineFooterReg, for: indexPath)
+                }
+            case .last:
+                return self.collectionView.dequeueConfiguredReusableSupplementary(using: lastHeaderReg, for: indexPath)
             default:
                 return self.collectionView.dequeueConfiguredReusableSupplementary(using: homeHeaderReg, for: indexPath)
             }
@@ -311,9 +347,15 @@ extension HomeVC {
     }
     
     private func magazineFooterRegistration() -> UICollectionView.SupplementaryRegistration<MagazineFooterView> {
-        return .init(elementKind: UICollectionView.elementKindSectionFooter) { footer, _, indexPath in
-            let sectionKind = HomeSection.allCases[indexPath.section]
+        return .init(elementKind: UICollectionView.elementKindSectionFooter) { footer, _, _ in
             footer.showBtn.setTitle("모두 보기", for: .normal)
+        }
+    }
+    
+    private func lastHeaderRegistration() -> UICollectionView.SupplementaryRegistration<LastHeaderView> {
+        return .init(elementKind: UICollectionView.elementKindSectionHeader) { header, _, indexPath in
+            let sectionKind = HomeSection.allCases[indexPath.section]
+            header.titleLabel.text = sectionKind.header.title
         }
     }
     
@@ -334,6 +376,8 @@ extension HomeVC {
                 snapshot.appendItems(self.viewModel.relationProducts.map({ $0.id }), toSection: $0)
             case .magazine:
                 snapshot.appendItems(self.viewModel.magazines.map({ $0.id }), toSection: $0)
+            case .last:
+                snapshot.appendItems(["Footer"], toSection: $0)
             }
         }
         dataSource.apply(snapshot)
