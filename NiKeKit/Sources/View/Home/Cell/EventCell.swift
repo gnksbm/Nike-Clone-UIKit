@@ -7,6 +7,7 @@
 //
 
 import UIKit
+
 class EventCell: UICollectionViewCell {
     let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -48,11 +49,6 @@ class EventCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        configureUI()
     }
     
     func configureUI() {

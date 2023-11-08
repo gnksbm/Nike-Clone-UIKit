@@ -362,9 +362,9 @@ extension HomeVC {
     // MARK: Snapshot
     private func updateSnapshot() {
         snapshot = .init()
-        let section = HomeSection.allCases
-        snapshot.appendSections(section)
-        section.forEach {
+        let sections = HomeSection.allCases
+        snapshot.appendSections(sections)
+        sections.forEach {
             switch $0 {
             case .recommend:
                 snapshot.appendItems(self.viewModel.recommendedProducts.map({ $0.id }), toSection: $0)

@@ -82,4 +82,3 @@ struct RecommendHeaderView_Preview: PreviewProvider {
         UIKitPreview(selectedIndex: 0)
     }
 }
-

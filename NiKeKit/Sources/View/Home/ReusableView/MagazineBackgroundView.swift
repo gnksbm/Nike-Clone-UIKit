@@ -29,4 +29,3 @@ struct MagazineBackgroundView_Preview: PreviewProvider {
         UIKitPreview(selectedIndex: 0)
     }
 }
-
