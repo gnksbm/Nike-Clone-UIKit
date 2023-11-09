@@ -1,5 +1,5 @@
 //
-//  MagazineBackgroundView.swift
+//  AccentBackgroundView.swift
 //  NikeKit
 //
 //  Created by gnksbm on 2023/11/04.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MagazineBackgroundView: UICollectionReusableView {
+class AccentBackgroundView: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -19,7 +19,7 @@ class MagazineBackgroundView: UICollectionReusableView {
     }
     
     func configureUI() {
-        backgroundColor = UIColor.black
+        backgroundColor = NikeKitAsset.accentColor.color
     }
 }
 

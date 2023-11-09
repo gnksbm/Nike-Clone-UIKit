@@ -18,7 +18,7 @@ class HomeVC: UIViewController {
         var config = UIButton.Configuration.plain()
         let imgConfig = UIImage.SymbolConfiguration(font: .systemFont(ofSize: UIFont.buttonFontSize, weight: .medium))
         config.preferredSymbolConfigurationForImage = imgConfig
-        config.baseForegroundColor = UIColor(named: NikeKitAsset.accentColor.name)
+        config.baseForegroundColor = NikeKitAsset.accentColor.color
         config.image = UIImage(systemName: "magnifyingglass")
         config.buttonSize = .mini
         let btn = UIButton(configuration: config)
@@ -41,7 +41,7 @@ class HomeVC: UIViewController {
     
     private func setNavigation() {
         let searchItem = UIBarButtonItem(systemItem: .search)
-        searchItem.tintColor = UIColor(named: NikeKitAsset.accentColor.name)
+        searchItem.tintColor = NikeKitAsset.accentColor.color
         navigationItem.rightBarButtonItem = searchItem
     }
     
@@ -177,7 +177,7 @@ extension HomeVC {
                                                           leading: 20,
                                                           bottom: 20,
                                                           trailing: 10)
-                let decorationView = NSCollectionLayoutDecorationItem.background(elementKind: MagazineBackgroundView.identifier)
+                let decorationView = NSCollectionLayoutDecorationItem.background(elementKind: AccentBackgroundView.identifier)
                 section.decorationItems = [decorationView]
                 let footerSupplementary = NSCollectionLayoutBoundarySupplementaryItem(
                     layoutSize: .init(
@@ -211,7 +211,7 @@ extension HomeVC {
             }
             return section
         }
-        layout.register(MagazineBackgroundView.self, forDecorationViewOfKind: MagazineBackgroundView.identifier)
+        layout.register(AccentBackgroundView.self, forDecorationViewOfKind: AccentBackgroundView.identifier)
         return layout
     }
     // MARK: DataSource
@@ -308,7 +308,7 @@ extension HomeVC {
         }
     }
     
-    private func homeHeaderRegistration() -> UICollectionView.SupplementaryRegistration<HomeHeaderView> {
+    private func homeHeaderRegistration() -> UICollectionView.SupplementaryRegistration<TitleAndShowBtnHeader> {
         return .init(elementKind: UICollectionView.elementKindSectionHeader) { header, _, indexPath in
             let sectionKind = HomeSection.allCases[indexPath.section]
             header.titleLabel.text = sectionKind.header.title
@@ -319,7 +319,7 @@ extension HomeVC {
         }
     }
     
-    private func relationHeaderRegistration() -> UICollectionView.SupplementaryRegistration<RelationHeaderView> {
+    private func relationHeaderRegistration() -> UICollectionView.SupplementaryRegistration<StackAndShowBtnHeader> {
         return .init(elementKind: UICollectionView.elementKindSectionHeader) { header, _, indexPath in
             let sectionKind = HomeSection.allCases[indexPath.section]
             header.titleLabel.text = sectionKind.header.title
@@ -337,12 +337,12 @@ extension HomeVC {
         }
     }
     
-    private func magazineHeaderRegistration() -> UICollectionView.SupplementaryRegistration<HomeHeaderView> {
+    private func magazineHeaderRegistration() -> UICollectionView.SupplementaryRegistration<TitleAndShowBtnHeader> {
         return .init(elementKind: UICollectionView.elementKindSectionHeader) { header, _, indexPath in
             let sectionKind = HomeSection.allCases[indexPath.section]
             header.titleLabel.text = sectionKind.header.title
             header.showBtn.setTitle("모두 보기", for: .normal)
-            header.titleLabel.textColor = .white
+            header.titleLabel.textColor = .systemBackground
         }
     }
     

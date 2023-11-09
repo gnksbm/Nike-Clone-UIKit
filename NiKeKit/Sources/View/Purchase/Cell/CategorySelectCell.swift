@@ -17,6 +17,12 @@ class CategorySelectCell: UICollectionViewCell {
         return label
     }()
     
+    let underLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = NikeKitAsset.accentColor.color
+        return view
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -32,7 +38,7 @@ class CategorySelectCell: UICollectionViewCell {
     }
     
     func configureUI() {
-        [label].forEach {
+        [label, underLineView].forEach {
             contentView.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -41,6 +47,18 @@ class CategorySelectCell: UICollectionViewCell {
             label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             label.widthAnchor.constraint(equalTo: contentView.widthAnchor),
             label.heightAnchor.constraint(equalTo: contentView.heightAnchor),
+            
+            underLineView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            underLineView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            underLineView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 2/3),
+            underLineView.heightAnchor.constraint(equalToConstant: 2),
         ])
+    }
+}
+
+import SwiftUI
+struct CategorySelectCell_Preview: PreviewProvider {
+    static var previews: some View {
+        UIKitPreview(selectedIndex: 1)
     }
 }

@@ -35,7 +35,7 @@ enum MainTab: Int, CaseIterable {
             navigationControllers.append(navigationController)
             if $0 == .home || $0 == .purchase {
                 let searchItem = UIBarButtonItem(systemItem: .search)
-                searchItem.tintColor = UIColor(named: NikeKitAsset.accentColor.name)
+                searchItem.tintColor = NikeKitAsset.accentColor.color
                 navigationController.navigationItem.rightBarButtonItem = searchItem
             }
         }

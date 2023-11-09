@@ -1,5 +1,5 @@
 //
-//  RelationHeaderView.swift
+//  StackAndShowBtnHeader.swift
 //  NikeKit
 //
 //  Created by gnksbm on 2023/11/04.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RelationHeaderView: UICollectionReusableView {
+class StackAndShowBtnHeader: UICollectionReusableView {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: UIFont.labelFontSize, weight: .medium)

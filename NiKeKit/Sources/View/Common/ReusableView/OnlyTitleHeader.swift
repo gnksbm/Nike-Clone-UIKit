@@ -1,5 +1,5 @@
 //
-//  ProductCategoryHeader.swift
+//  OnlyTitleHeader.swift
 //  NikeKit
 //
 //  Created by gnksbm on 2023/11/08.
@@ -8,11 +8,11 @@
 
 import UIKit
 
-class ProductCategoryHeader: UICollectionReusableView {
+class OnlyTitleHeader: UICollectionReusableView {
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 26, weight: .medium)
-        label.textColor = .darkGray
+        label.font = .systemFont(ofSize: UIFont.labelFontSize, weight: .medium)
+        label.textColor = NikeKitAsset.accentColor.color
         return label
     }()
     
@@ -27,21 +27,13 @@ class ProductCategoryHeader: UICollectionReusableView {
     
     func configureUI() {
         [titleLabel].forEach {
-            self.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
+            self.addSubview($0)
         }
         
         NSLayoutConstraint.activate([
+            titleLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            titleLabel.topAnchor.constraint(equalTo: self.topAnchor),
-            titleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor),
         ])
-    }
-}
-
-import SwiftUI
-struct ProductCategoryHeader_Preview: PreviewProvider {
-    static var previews: some View {
-        UIKitPreview(selectedIndex: 1)
     }
 }

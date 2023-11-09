@@ -1,5 +1,5 @@
 //
-//  HomeHeaderView.swift
+//  TitleAndShowBtnHeader.swift
 //  NiKeKit
 //
 //  Created by gnksbm on 2023/09/05.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HomeHeaderView: UICollectionReusableView {
+class TitleAndShowBtnHeader: UICollectionReusableView {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: UIFont.labelFontSize, weight: .medium)
@@ -48,7 +48,7 @@ class HomeHeaderView: UICollectionReusableView {
 }
 
 import SwiftUI
-struct HomeHeaderView_Preview: PreviewProvider {
+struct TitleAndShowBtnView_Preview: PreviewProvider {
     static var previews: some View {
         UIKitPreview(selectedIndex: 0)
     }
