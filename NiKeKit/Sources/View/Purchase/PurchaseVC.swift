@@ -63,7 +63,7 @@ class PurchaseVC: UIViewController {
         ])
     }
 }
-
+// MARK: CollectionView
 extension PurchaseVC {
     // MARK: Layout
     private func makeLayout() -> UICollectionViewCompositionalLayout {

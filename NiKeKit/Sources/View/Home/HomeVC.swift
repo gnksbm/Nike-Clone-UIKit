@@ -67,7 +67,7 @@ class HomeVC: UIViewController {
         view.setNeedsUpdateConstraints()
     }
 }
-
+// MARK: CollectionView
 extension HomeVC {
     // MARK: Layout
     private func makeLayout() -> UICollectionViewCompositionalLayout {
@@ -268,7 +268,7 @@ extension HomeVC {
         updateSnapshot()
     }
     
-    private func productRegistration() -> UICollectionView.CellRegistration<ProductCell, String> {
+    private func productRegistration() -> UICollectionView.CellRegistration<HomeProductCell, String> {
         return .init { cell, _, id in
             let product = self.viewModel.products.first(where: { $0.id == id })
             if let image = product?.images.first {
@@ -358,7 +358,6 @@ extension HomeVC {
             header.titleLabel.text = sectionKind.header.title
         }
     }
-    
     // MARK: Snapshot
     private func updateSnapshot() {
         snapshot = .init()

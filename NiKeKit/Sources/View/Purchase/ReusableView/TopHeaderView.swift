@@ -12,7 +12,7 @@ class TopHeaderView: UICollectionReusableView {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 26, weight: .medium)
-        label.textColor = .black
+        label.textColor = NikeKitAsset.accentColor.color
         return label
     }()
     

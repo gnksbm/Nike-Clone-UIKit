@@ -1,18 +1,17 @@
 //
-//  ProductCell.swift
-//  NiKeKit
+//  WishListCell.swift
+//  NikeKit
 //
-//  Created by gnksbm on 2023/09/05.
+//  Created by gnksbm on 2023/11/11.
+//  Copyright © 2023 https://github.com/gnksbm/NikeKit. All rights reserved.
 //
 
 import UIKit
 
-class ProductCell: UICollectionViewCell {
+class WishListCell: UICollectionViewCell {
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "progress")
-        imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 8
         return imageView
     }()
     
@@ -27,13 +26,6 @@ class ProductCell: UICollectionViewCell {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = .systemFont(ofSize: UIFont.labelFontSize, weight: .medium)
-        return label
-    }()
-    
-    let categoryLabel: UILabel = {
-        let label = UILabel()
-        label.font = .systemFont(ofSize: UIFont.labelFontSize, weight: .regular)
-        label.textColor = .darkGray
         return label
     }()
     
@@ -53,7 +45,7 @@ class ProductCell: UICollectionViewCell {
     }
     
     func configureUI() {
-        [titleLabel, categoryLabel, priceLabel].forEach {
+        [titleLabel, priceLabel].forEach {
             stackView.addArrangedSubview($0)
         }
         [imageView, stackView].forEach {
@@ -65,17 +57,18 @@ class ProductCell: UICollectionViewCell {
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             imageView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
-            imageView.heightAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 1.3),
+            imageView.heightAnchor.constraint(equalTo: contentView.widthAnchor),
             
             stackView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
-            stackView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
         ])
     }
 }
 
 import SwiftUI
-struct ProductCell_Preview: PreviewProvider {
+struct WishListCell_Preview: PreviewProvider {
     static var previews: some View {
-        UIKitPreview(selectedIndex: 0)
+        UIKitPreview(selectedIndex: 2)
     }
 }
