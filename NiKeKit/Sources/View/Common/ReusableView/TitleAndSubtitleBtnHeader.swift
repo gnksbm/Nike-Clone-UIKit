@@ -1,14 +1,14 @@
 //
-//  StackAndShowBtnHeader.swift
+//  TitleAndSubtitleBtnHeader.swift
 //  NikeKit
 //
-//  Created by gnksbm on 2023/11/09.
+//  Created by gnksbm on 2023/11/04.
 //  Copyright © 2023 https://github.com/gnksbm/NikeKit. All rights reserved.
 //
 
 import UIKit
 
-class StackAndShowBtnHeader: UICollectionReusableView {
+class TitleAndSubtitleBtnHeader: UICollectionReusableView {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: UIFont.labelFontSize, weight: .medium)
@@ -29,14 +29,6 @@ class StackAndShowBtnHeader: UICollectionReusableView {
         return stackView
     }()
     
-    let showBtn: UIButton = {
-        var config = UIButton.Configuration.plain()
-        config.baseForegroundColor = .darkGray
-        let btn = UIButton(configuration: config)
-        btn.titleLabel?.font = .systemFont(ofSize: UIFont.labelFontSize)
-        return btn
-    }()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -50,25 +42,18 @@ class StackAndShowBtnHeader: UICollectionReusableView {
         [titleLabel, subTitleLabel].forEach {
             titleStackView.addArrangedSubview($0)
         }
-        
-        [titleStackView, showBtn].forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            self.addSubview($0)
-        }
+        titleStackView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(titleStackView)
         
         NSLayoutConstraint.activate([
             titleStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             titleStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            
-            showBtn.topAnchor.constraint(equalTo: titleStackView.topAnchor),
-            showBtn.bottomAnchor.constraint(equalTo: titleStackView.bottomAnchor),
-            showBtn.trailingAnchor.constraint(equalTo: self.trailingAnchor),
         ])
     }
 }
 
 import SwiftUI
-struct StackAndShowBtnHeader_Preview: PreviewProvider {
+struct RelationHeaderView_Preview: PreviewProvider {
     static var previews: some View {
         UIKitPreview(selectedIndex: 0)
     }

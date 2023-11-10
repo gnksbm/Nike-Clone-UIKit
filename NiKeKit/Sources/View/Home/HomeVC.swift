@@ -319,7 +319,7 @@ extension HomeVC {
         }
     }
     
-    private func relationHeaderRegistration() -> UICollectionView.SupplementaryRegistration<StackAndShowBtnHeader> {
+    private func relationHeaderRegistration() -> UICollectionView.SupplementaryRegistration<TitleAndSubtitleBtnHeader> {
         return .init(elementKind: UICollectionView.elementKindSectionHeader) { header, _, indexPath in
             let sectionKind = HomeSection.allCases[indexPath.section]
             header.titleLabel.text = sectionKind.header.title

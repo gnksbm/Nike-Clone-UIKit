@@ -9,38 +9,45 @@
 import Foundation
 
 enum PurchaseSection: CaseIterable {
-    case top, bestCollection, imageCategory, outer, acgNew, earlyAccess, weeklyBest, sport, searchTrending, recentlyViewed, interest, brand, information, nearby
+    case top, bestCollection, wideImage, outer, acgNew, earlyAccess, weeklyBest, sport, searchTrending, recentlyViewed, interest, brand, information, nearby
     
-    var title: String {
+    var header: Header {
         switch self {
         case .top:
-            return "구매하기"
+            return Header(title: "구매하기")
         case .bestCollection:
-            return "나이키 앱 베스트 컬렉션"
-        case .imageCategory:
-            return ""
+            return Header(title: "나이키 앱 베스트 컬렉션")
+        case .wideImage:
+            return Header(title: "")
         case .outer:
-            return "나이키 아우터"
+            return Header(title: "나이키 아우터")
         case .acgNew:
-            return "ACG 신제품"
+            return Header(title: "ACG 신제품")
         case .earlyAccess:
-            return "App Early Access 🔒"
+            return Header(title: "App Early Access 🔒", subtitle: "나이키 앱에서 먼저 만나보세요.")
         case .weeklyBest:
-            return "11월 첫째 주 베스트 아이템 🏅"
+            return Header(title: "11월 첫째 주 베스트 아이템 🏅")
         case .sport:
-            return "스포츠별 구매하기"
+            return Header(title: "스포츠별 구매하기")
         case .searchTrending:
-            return "인기 검색어"
+            return Header(title: "인기 검색어")
         case .recentlyViewed:
-            return "최근 본 제품"
+            return Header(title: "최근 본 제품")
         case .interest:
-            return "관심 제품 구매하기"
+            return Header(title: "관심 제품 구매하기")
         case .brand:
-            return "브랜드별 구매하기"
+            return Header(title: "브랜드별 구매하기")
         case .information:
-            return "Information Center"
+            return Header(title: "Information Center")
         case .nearby:
-            return "근처 매장"
+            return Header(title: "근처 매장")
         }
+    }
+}
+
+extension PurchaseSection {
+    struct Header {
+        var title: String
+        var subtitle: String?
     }
 }
