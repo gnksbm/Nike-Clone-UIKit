@@ -1,5 +1,5 @@
 //
-//  EmptyWishListView.swift
+//  EmptyListView.swift
 //  NikeKit
 //
 //  Created by gnksbm on 2023/11/10.
@@ -8,11 +8,10 @@
 
 import UIKit
 
-final class EmptyWishListView: UIView {
+final class EmptyListView: UIView {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 26, weight: .medium)
-        label.text = "위시리스트"
         label.textColor = NikeKitAsset.accentColor.color
         return label
     }()
@@ -26,7 +25,6 @@ final class EmptyWishListView: UIView {
     
     let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "heart")
         imageView.tintColor = NikeKitAsset.accentColor.color
         return imageView
     }()
@@ -49,6 +47,13 @@ final class EmptyWishListView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
+    }
+    
+    convenience init(image: UIImage?, title: String, message: String) {
+        self.init(frame: .zero)
+        imageView.image = image
+        titleLabel.text = title
+        messageLabel.text = message
     }
     
     required init?(coder: NSCoder) {

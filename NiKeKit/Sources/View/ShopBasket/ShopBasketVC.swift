@@ -13,6 +13,8 @@ final class ShopBasketVC: UIViewController {
     
     private let viewModel = ShopBasketViewModel()
     
+    private let emptyView = EmptyListView(image: UIImage(systemName: "bag"), title: "장바구니", message: "장바구니가 비어 있습니다. \n제품을 추가하면 여기에 표시됩니다.")
+    
     private lazy var shopBasketCV: UICollectionView = {
         let layout = makeLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -32,13 +34,74 @@ final class ShopBasketVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
         navigationController?.isNavigationBarHidden = true
-        configureUI()
+        setSubView()
         configureDataSource()
-        viewModel.setOnCompleteAction(updateSnapshot)
-        viewModel.fetchProducts()
+        viewModel.setOnCompleteAction(setBinding)
+//        viewModel.fetchProducts()
     }
     
+    private func setBinding() {
+        setSubView()
+        updateSnapshot()
+    }
+    
+    private func setSubView() {
+        if viewModel.basketItems.isEmpty {
+            configureEmptyView()
+        } else {
+            configureCollectionView()
+        }
+    }
+    
+    private func configureEmptyView() {
+        navigationController?.isNavigationBarHidden = true
+        shopBasketCV.removeFromSuperview()
+        orderBtn.removeFromSuperview()
+        dividerView.removeFromSuperview()
+        view.addSubview(emptyView)
+        [emptyView].forEach {
+            view.addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
+        let safeArea = view.safeAreaLayoutGuide
+        
+        NSLayoutConstraint.activate([
+            emptyView.widthAnchor.constraint(equalTo: safeArea.widthAnchor),
+            emptyView.heightAnchor.constraint(equalTo: safeArea.heightAnchor),
+            emptyView.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
+            emptyView.centerYAnchor.constraint(equalTo: safeArea.centerYAnchor),
+        ])
+    }
+    
+    private func configureCollectionView() {
+        emptyView.removeFromSuperview()
+        view.addSubview(shopBasketCV)
+        [orderBtn, shopBasketCV, dividerView].forEach {
+            view.addSubview($0)
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
+        let safeArea = view.safeAreaLayoutGuide
+        
+        NSLayoutConstraint.activate([
+            orderBtn.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.9),
+            orderBtn.heightAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.18),
+            orderBtn.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
+            orderBtn.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -25),
+            
+            shopBasketCV.topAnchor.constraint(equalTo: safeArea.topAnchor),
+            shopBasketCV.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
+            shopBasketCV.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
+            shopBasketCV.bottomAnchor.constraint(equalTo: orderBtn.topAnchor, constant: -20),
+            
+            dividerView.heightAnchor.constraint(equalToConstant: 1),
+            dividerView.widthAnchor.constraint(equalTo: safeArea.widthAnchor),
+            dividerView.centerYAnchor.constraint(equalTo: shopBasketCV.bottomAnchor),
+        ])
+    }
     private func configureUI() {
         [shopBasketCV, orderBtn, dividerView].forEach {
             view.addSubview($0)
@@ -124,7 +187,7 @@ extension ShopBasketVC {
     
     private func cellRegistration() -> UICollectionView.CellRegistration<BasketCell, String> {
         return .init { cell, _, id in
-            guard let item = self.viewModel.basketItem.first(where: { $0.id == id }) else { return }
+            guard let item = self.viewModel.basketItems.first(where: { $0.id == id }) else { return }
             if let image = item.product.images.first {
                 cell.productImageView.image = image
             }
@@ -179,7 +242,7 @@ extension ShopBasketVC {
     private func updateSnapshot() {
         snapshot = .init()
         snapshot.appendSections([0])
-        snapshot.appendItems(self.viewModel.basketItem.map({ $0.id }))
+        snapshot.appendItems(self.viewModel.basketItems.map({ $0.id }))
         dataSource.apply(snapshot)
     }
 }

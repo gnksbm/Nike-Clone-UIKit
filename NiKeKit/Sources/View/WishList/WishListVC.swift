@@ -23,7 +23,7 @@ final class WishListVC: UIViewController {
         return button
     }()
     
-    private let emptyView = EmptyWishListView()
+    private let emptyView = EmptyListView(image: UIImage(systemName: "heart"), title: "위시리스트", message: "위시리스트에 추가한 상품이 없습니다.")
     private lazy var wishListCV: UICollectionView = {
         let layout = makeLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -32,6 +32,7 @@ final class WishListVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
         setSubView()
         configureDataSource()
         viewModel.setOnCompleteAction(setBinding)
@@ -54,6 +55,7 @@ final class WishListVC: UIViewController {
     private func configureEmptyView() {
         navigationController?.isNavigationBarHidden = true
         wishListCV.removeFromSuperview()
+        editBtn.removeFromSuperview()
         view.addSubview(emptyView)
         [emptyView].forEach {
             view.addSubview($0)

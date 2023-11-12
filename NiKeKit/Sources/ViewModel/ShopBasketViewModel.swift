@@ -9,18 +9,18 @@
 import Foundation
 
 final class ShopBasketViewModel {
-    private(set) var basketItem: [BasketItem] = []
+    private(set) var basketItems: [BasketItem] = []
     private(set) var promotion: Promotion?
     private(set) var delivery: Delivery = .free
     
     var totalPrice: Int {
-        basketItem
+        basketItems
             .map { $0.product.price }
             .reduce(0, { $0 + $1 })
     }
     
     var discountPrice: Int {
-        let promotions: Int = basketItem
+        let promotions: Int = basketItems
             .compactMap { item in
                 guard let discountRate = item.product.promotion?.discountRate else { return nil }
                 return Int(Double(item.product.price) * discountRate)
@@ -36,7 +36,7 @@ final class ShopBasketViewModel {
     private var onComplete: () -> Void = { }
     
     func fetchProducts() {
-        basketItem = [
+        basketItems = [
             .sample1,
             .sample2,
             .sample3,
