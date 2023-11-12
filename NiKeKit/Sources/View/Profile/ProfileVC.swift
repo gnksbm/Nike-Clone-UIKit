@@ -30,6 +30,7 @@ final class ProfileVC: UIViewController {
     
     private func configureUI() {
         view.backgroundColor = .systemBackground
+        navigationController?.isNavigationBarHidden = true
         [profileCV].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
@@ -82,22 +83,19 @@ extension ProfileVC {
                 let footer = NSCollectionLayoutBoundarySupplementaryItem(
                     layoutSize: .init(
                         widthDimension: .fractionalWidth(1),
-                        heightDimension: .absolute(15)
+                        heightDimension: .absolute(10)
                     ),
                     elementKind: UICollectionView.elementKindSectionFooter,
                     alignment: .bottom
                 )
                 section = NSCollectionLayoutSection(group: group)
+                section.contentInsets = .init(edge: .botton, value: 40)
                 section.boundarySupplementaryItems = [footer]
             case .interaction:
                 group = .vertical(layoutSize: .init(
                     widthDimension: .fractionalWidth(1),
                     heightDimension: .fractionalWidth(1/5)
                 ), subitems: [item])
-                group.contentInsets = .init(top: 0,
-                                             leading: 0,
-                                             bottom: 0,
-                                             trailing: 0)
                 group.edgeSpacing = .init(edge: .top, spacing: .flexible(15))
                 section = NSCollectionLayoutSection(group: group)
                 section.contentInsets = .init(top: 0,

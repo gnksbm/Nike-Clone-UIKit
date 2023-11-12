@@ -17,13 +17,12 @@ final class EventCell: UICollectionViewCell {
     let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.distribution = .equalSpacing
         return stackView
     }()
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: UIFont.labelFontSize, weight: .medium)
+        label.font = .systemFont(ofSize: 14, weight: .medium)
         label.textColor = .black
         label.numberOfLines = 2
         return label
@@ -31,7 +30,7 @@ final class EventCell: UICollectionViewCell {
     
     let contentLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: UIFont.labelFontSize, weight: .light)
+        label.font = .systemFont(ofSize: 14, weight: .light)
         label.textColor = .darkGray
         label.numberOfLines = 2
         return label
@@ -70,7 +69,7 @@ final class EventCell: UICollectionViewCell {
             stackView.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 15),
             stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -25),
             stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
+            stackView.bottomAnchor.constraint(equalTo: imageView.bottomAnchor, constant: -5),
         ])
     }
 }

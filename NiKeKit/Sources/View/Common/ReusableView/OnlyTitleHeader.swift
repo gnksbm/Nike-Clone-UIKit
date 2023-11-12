@@ -11,7 +11,7 @@ import UIKit
 final class OnlyTitleHeader: UICollectionReusableView {
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: UIFont.labelFontSize, weight: .medium)
+        label.font = .systemFont(ofSize: 18, weight: .medium)
         label.textColor = NikeKitAsset.accentColor.color
         return label
     }()

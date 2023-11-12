@@ -29,29 +29,6 @@ final class PurchaseViewModel {
     private let urlStr = "https://itunes.apple.com/search?term=billevans"
     private var onComplete: () -> Void = { }
     
-    func loadImage(url: URL) async -> UIImage? {
-        let result = await networkManager.fetchData(url: url)
-        switch result {
-        case .success(let data):
-            return UIImage(data: data)
-        case .failure(let error):
-            print(#function, error.localizedDescription)
-            return nil
-        }
-    }
-    
-    func convertToNews(mocks: [MockResult]) async -> [News] {
-        var newsList = [News]()
-        await mocks.asyncForEach { [weak self] mock in
-            guard let url = URL(string: mock.imageURLStr),
-                  let title = mock.title,
-                  let image = await self?.loadImage(url: url)
-            else { return }
-            newsList.append(News(image: image, title: title, subtitle: "", interaction: ""))
-        }
-        return newsList
-    }
-    
     func fetchProducts() async {
         guard let url = URL(string: urlStr) else { return }
         let result = await networkManager.fetchObject(type: Mock.self, url: url)
@@ -70,7 +47,7 @@ final class PurchaseViewModel {
         nearbyList = []
         switch result {
         case .success(let success):
-            let newsList = await convertToNews(mocks: success.results)
+            let newsList = await success.results.convertToNews()
             for (index, news) in newsList.enumerated() {
                 let sectionIndex = index % 11
                 switch sectionIndex {

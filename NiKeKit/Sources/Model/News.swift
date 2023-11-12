@@ -10,13 +10,13 @@ import UIKit
 
 struct News: Identifiable {
     let id: String
-    var image: UIImage
+    var image: UIImage?
     var title: String
     var subtitle: String
     var interaction: String
     
     init(id: String = UUID().uuidString,
-         image: UIImage,
+         image: UIImage?,
          title: String,
          subtitle: String,
          interaction: String) {

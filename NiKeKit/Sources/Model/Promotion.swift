@@ -15,7 +15,11 @@ struct Promotion: Identifiable, Hashable {
     var discountRate: Double
     var expireDate: Date
     
-    init(id: String = UUID().uuidString, name: String, code: String = String(UUID().uuidString.prefix(10)), discountRate: Double, expireDate: Date) {
+    init(id: String = UUID().uuidString,
+         name: String,
+         code: String = String(UUID().uuidString.prefix(10)),
+         discountRate: Double,
+         expireDate: Date) {
         self.id = id
         self.name = name
         self.code = code

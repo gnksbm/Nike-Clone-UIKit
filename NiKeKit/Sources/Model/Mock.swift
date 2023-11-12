@@ -5,7 +5,7 @@
 //  Created by gnksbm on 2023/08/14.
 //
 
-import Foundation
+import UIKit
 
 // MARK: - Welcome
 struct Mock: Codable {
@@ -33,5 +33,21 @@ extension Array<MockResult> {
             return String(int)
         }
         return ids
+    }
+    
+    func convertToNews() async -> [News] {
+        var newsList = [News]()
+        await self.asyncForEach { mock in
+            guard let url = URL(string: mock.imageURLStr),
+                  let title = mock.title else { return }
+            let result = await NetworkManager.shared.fetchData(url: url)
+            switch result {
+            case .success(let data):
+                newsList.append(News(image: UIImage(data: data), title: title, subtitle: "", interaction: ""))
+            case .failure(let error):
+                print(#function, error.localizedDescription)
+            }
+        }
+        return newsList
     }
 }

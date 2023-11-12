@@ -10,7 +10,7 @@ import UIKit
 final class TitleAndShowBtnHeader: UICollectionReusableView {
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: UIFont.labelFontSize, weight: .medium)
+        label.font = .systemFont(ofSize: 18, weight: .medium)
         return label
     }()
     
@@ -18,7 +18,7 @@ final class TitleAndShowBtnHeader: UICollectionReusableView {
         var config = UIButton.Configuration.plain()
         config.baseForegroundColor = .darkGray
         let btn = UIButton(configuration: config)
-        btn.titleLabel?.font = .systemFont(ofSize: UIFont.labelFontSize)
+        btn.titleLabel?.font = .systemFont(ofSize: 16)
         return btn
     }()
     
