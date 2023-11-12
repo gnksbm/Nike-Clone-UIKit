@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MagazineCell: UICollectionViewCell {
+final class MagazineCell: UICollectionViewCell {
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "xmark.icloud")
@@ -49,7 +49,7 @@ class MagazineCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureUI() {
+    private func configureUI() {
         [authorLabel, titleLabel].forEach {
             stackView.addArrangedSubview($0)
         }

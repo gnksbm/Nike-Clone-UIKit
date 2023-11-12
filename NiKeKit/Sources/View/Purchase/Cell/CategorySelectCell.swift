@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CategorySelectCell: UICollectionViewCell {
+final class CategorySelectCell: UICollectionViewCell {
     let label: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: UIFont.labelFontSize, weight: .medium)
@@ -37,7 +37,7 @@ class CategorySelectCell: UICollectionViewCell {
         configureUI()
     }
     
-    func configureUI() {
+    private func configureUI() {
         [label, underLineView].forEach {
             contentView.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false

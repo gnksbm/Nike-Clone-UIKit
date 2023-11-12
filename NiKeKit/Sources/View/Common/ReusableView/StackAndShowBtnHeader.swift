@@ -8,7 +8,7 @@
 
 import UIKit
 
-class StackAndShowBtnHeader: UICollectionReusableView {
+final class StackAndShowBtnHeader: UICollectionReusableView {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: UIFont.labelFontSize, weight: .medium)
@@ -46,7 +46,7 @@ class StackAndShowBtnHeader: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureUI() {
+    private func configureUI() {
         [titleLabel, subTitleLabel].forEach {
             titleStackView.addArrangedSubview($0)
         }

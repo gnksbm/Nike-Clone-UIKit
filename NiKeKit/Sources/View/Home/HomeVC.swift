@@ -6,9 +6,8 @@
 //
 
 import UIKit
-protocol HomeCell: Hashable, Sendable { }
 
-class HomeVC: UIViewController {
+final class HomeVC: UIViewController {
     private var dataSource: UICollectionViewDiffableDataSource<HomeSection, String>!
     private var snapshot: NSDiffableDataSourceSnapshot<HomeSection, String>!
     
@@ -246,23 +245,23 @@ extension HomeVC {
         let magazineHeaderReg = magazineHeaderRegistration()
         let magazineFooterReg = magazineFooterRegistration()
         let lastHeaderReg = lastHeaderRegistration()
-        dataSource.supplementaryViewProvider = { _, kind, indexPath in
+        dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
             let sectionKind = HomeSection.allCases[indexPath.section]
             switch sectionKind {
             case .recommend:
-                return self.collectionView.dequeueConfiguredReusableSupplementary(using: recommendHeaderReg, for: indexPath)
+                return collectionView.dequeueConfiguredReusableSupplementary(using: recommendHeaderReg, for: indexPath)
             case .relation:
-                return self.collectionView.dequeueConfiguredReusableSupplementary(using: relationHeaderReg, for: indexPath)
+                return collectionView.dequeueConfiguredReusableSupplementary(using: relationHeaderReg, for: indexPath)
             case .magazine:
                 if kind == UICollectionView.elementKindSectionHeader {
-                    return self.collectionView.dequeueConfiguredReusableSupplementary(using: magazineHeaderReg, for: indexPath)
+                    return collectionView.dequeueConfiguredReusableSupplementary(using: magazineHeaderReg, for: indexPath)
                 } else {
-                    return self.collectionView.dequeueConfiguredReusableSupplementary(using: magazineFooterReg, for: indexPath)
+                    return collectionView.dequeueConfiguredReusableSupplementary(using: magazineFooterReg, for: indexPath)
                 }
             case .last:
-                return self.collectionView.dequeueConfiguredReusableSupplementary(using: lastHeaderReg, for: indexPath)
+                return collectionView.dequeueConfiguredReusableSupplementary(using: lastHeaderReg, for: indexPath)
             default:
-                return self.collectionView.dequeueConfiguredReusableSupplementary(using: homeHeaderReg, for: indexPath)
+                return collectionView.dequeueConfiguredReusableSupplementary(using: homeHeaderReg, for: indexPath)
             }
         }
         updateSnapshot()
@@ -274,7 +273,7 @@ extension HomeVC {
             if let image = product?.images.first {
                 cell.imageView.image = image
             }
-            cell.titleLabel.text = product?.productName
+            cell.titleLabel.text = product?.name
             cell.categoryLabel.text = product?.category.toString
             cell.priceLabel.text = product?.price.toPriceStr
         }

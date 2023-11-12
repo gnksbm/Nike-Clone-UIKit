@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TopHeaderView: UICollectionReusableView {
+final class TopHeaderView: UICollectionReusableView {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 26, weight: .medium)
@@ -25,7 +25,7 @@ class TopHeaderView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureUI() {
+    private func configureUI() {
         [titleLabel].forEach {
             self.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false

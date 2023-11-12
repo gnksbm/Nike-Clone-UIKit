@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AccentBackgroundView: UICollectionReusableView {
+final class AccentBackgroundView: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
@@ -18,7 +18,7 @@ class AccentBackgroundView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureUI() {
+    private func configureUI() {
         backgroundColor = NikeKitAsset.accentColor.color
     }
 }

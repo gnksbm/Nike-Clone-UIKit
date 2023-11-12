@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WishListVC: UIViewController {
+final class WishListVC: UIViewController {
     private var dataSource: UICollectionViewDiffableDataSource<Int, String>!
     private var snapshot: NSDiffableDataSourceSnapshot<Int, String>!
     
@@ -35,7 +35,7 @@ class WishListVC: UIViewController {
         setSubView()
         configureDataSource()
         viewModel.setOnCompleteAction(setBinding)
-        viewModel.fetchProducts()
+//        viewModel.fetchProducts()
     }
     
     private func setBinding() {
@@ -94,7 +94,7 @@ class WishListVC: UIViewController {
 // MARK: CollectionView
 extension WishListVC {
     // MARK: Layout
-    func makeLayout() -> UICollectionViewCompositionalLayout {
+    private func makeLayout() -> UICollectionViewCompositionalLayout {
         return .init { _, _ in
             let item = NSCollectionLayoutItem(layoutSize: .init(
                 widthDimension: .fractionalWidth(1),
@@ -137,8 +137,8 @@ extension WishListVC {
         }
         let headerReg = headerRegistration()
         
-        dataSource.supplementaryViewProvider = { _, _, indexPath in
-            return self.wishListCV.dequeueConfiguredReusableSupplementary(using: headerReg, for: indexPath)
+        dataSource.supplementaryViewProvider = { collectionView, _, indexPath in
+            return collectionView.dequeueConfiguredReusableSupplementary(using: headerReg, for: indexPath)
         }
         updateSnapshot()
     }
@@ -149,7 +149,7 @@ extension WishListVC {
             if let image = product?.images.first {
                 cell.imageView.image = image
             }
-            cell.titleLabel.text = product?.productName
+            cell.titleLabel.text = product?.name
             cell.priceLabel.text = product?.price.toPriceStr
         }
     }

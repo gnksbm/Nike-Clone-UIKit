@@ -16,6 +16,10 @@ enum Category: Hashable {
             return "신발"
         }
     }
+    
+    var size: [ShoesSize] {
+        self.size
+    }
 }
 
 enum ShoesSize: Hashable {
@@ -34,4 +38,39 @@ enum ShoesSize: Hashable {
          s290(stock: Int),
          s295(stock: Int),
          s300(stock: Int)
+    
+    var toString: String {
+        switch self {
+        case .s225:
+            return "225"
+        case .s230:
+            return "230"
+        case .s235:
+            return "235"
+        case .s240:
+            return "240"
+        case .s245:
+            return "245"
+        case .s250:
+            return "250"
+        case .s255:
+            return "255"
+        case .s260:
+            return "260"
+        case .s270:
+            return "270"
+        case .s275:
+            return "275"
+        case .s280:
+            return "280"
+        case .s285:
+            return "285"
+        case .s290:
+            return "290"
+        case .s295:
+            return "295"
+        case .s300:
+            return "300"
+        }
+    }
 }

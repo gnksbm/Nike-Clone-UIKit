@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HomeProductCell: UICollectionViewCell {
+final class HomeProductCell: UICollectionViewCell {
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "progress")
@@ -52,7 +52,7 @@ class HomeProductCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureUI() {
+    private func configureUI() {
         [titleLabel, categoryLabel, priceLabel].forEach {
             stackView.addArrangedSubview($0)
         }

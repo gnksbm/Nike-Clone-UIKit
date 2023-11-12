@@ -9,30 +9,33 @@ import UIKit
 
 struct Product: Hashable {
     let id: String
-    let productName: String
+    let name: String
     let category: Category
     let price: Int
     var images: [UIImage?]
     let code: String
     let colors: [String?]
     let madeIn: Country
+    let promotion: Promotion?
     
     init(id: String = UUID().uuidString,
-         productName: String,
+         name: String,
          category: Category,
          price: Int,
          images: [UIImage?],
          code: String,
          colors: [String?],
-         madeIn: Country) {
+         madeIn: Country,
+         promotion: Promotion? = nil) {
         self.id = id
-        self.productName = productName
+        self.name = name
         self.category = category
         self.price = price
         self.images = images
         self.code = code
         self.colors = colors
         self.madeIn = madeIn
+        self.promotion = promotion
     }
 }
 
@@ -49,7 +52,7 @@ enum Country: Hashable {
 
 extension Product {
     static let sample1: Self = .init(
-        productName: "나이키 코르테즈",
+        name: "나이키 코르테즈",
         category: .shoes(size: [
             .s225(stock: 1),
             .s235(stock: 1),
@@ -65,10 +68,11 @@ extension Product {
             "shale",
             "black",
         ],
-        madeIn: .indonesia
+        madeIn: .indonesia,
+        promotion: .sample1
     )
     static let sample2: Self = .init(
-        productName: "나이키 코르테즈2",
+        name: "나이키 코르테즈2",
         category: .shoes(size: [
             .s225(stock: 1),
             .s235(stock: 1),
@@ -87,7 +91,7 @@ extension Product {
         madeIn: .indonesia
     )
     static let sample3: Self = .init(
-        productName: "나이키 코르테즈3123123123",
+        name: "나이키 코르테즈3123123123",
         category: .shoes(size: [
             .s225(stock: 1),
             .s235(stock: 1),
@@ -106,7 +110,7 @@ extension Product {
         madeIn: .indonesia
     )
     static let sample4: Self = .init(
-        productName: "나이키 코르테즈4",
+        name: "나이키 코르테즈4",
         category: .shoes(size: [
             .s225(stock: 1),
             .s235(stock: 1),
@@ -125,7 +129,7 @@ extension Product {
         madeIn: .indonesia
     )
     static let sample5: Self = .init(
-        productName: "나이키 코르테즈5",
+        name: "나이키 코르테즈5",
         category: .shoes(size: [
             .s225(stock: 1),
             .s235(stock: 1),
@@ -144,7 +148,7 @@ extension Product {
         madeIn: .indonesia
     )
     static let sample6: Self = .init(
-        productName: "나이키 코르테즈6",
+        name: "나이키 코르테즈6",
         category: .shoes(size: [
             .s225(stock: 1),
             .s235(stock: 1),

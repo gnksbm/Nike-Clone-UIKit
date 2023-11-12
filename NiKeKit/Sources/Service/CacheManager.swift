@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CacheManager<T: AnyObject> {
+final class CacheManager<T: AnyObject> {
     private let shared = NSCache<NSString, T>()
 
     func saveData(url: URL, data: T) {

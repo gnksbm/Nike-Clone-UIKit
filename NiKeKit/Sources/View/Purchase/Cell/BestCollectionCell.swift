@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BestCollectionCell: UICollectionViewCell {
+final class BestCollectionCell: UICollectionViewCell {
     let imageView: UIImageView = {
         let imageView = UIImageView()
         return imageView
@@ -35,7 +35,7 @@ class BestCollectionCell: UICollectionViewCell {
         configureUI()
     }
     
-    func configureUI() {
+    private func configureUI() {
         [imageView, titleLabel].forEach {
             contentView.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false

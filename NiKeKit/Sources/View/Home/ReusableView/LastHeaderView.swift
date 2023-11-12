@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LastHeaderView: UICollectionReusableView {
+final class LastHeaderView: UICollectionReusableView {
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = NikeKitAsset.nikeLogo.image
@@ -30,7 +30,7 @@ class LastHeaderView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureUI() {
+    private func configureUI() {
         [imageView, titleLabel].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview($0)

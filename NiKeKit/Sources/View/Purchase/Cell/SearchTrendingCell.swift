@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchTrendingCell: UICollectionViewCell {
+final class SearchTrendingCell: UICollectionViewCell {
     let imageView: UIImageView = {
         let imageView = UIImageView()
         let image = UIImage(systemName: "magnifyingglass")
@@ -39,7 +39,7 @@ class SearchTrendingCell: UICollectionViewCell {
         configureUI()
     }
     
-    func configureUI() {
+    private func configureUI() {
         [imageView, titleLabel].forEach {
             contentView.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false

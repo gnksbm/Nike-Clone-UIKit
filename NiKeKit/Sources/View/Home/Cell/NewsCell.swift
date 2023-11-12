@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewsCell: UICollectionViewCell {
+final class NewsCell: UICollectionViewCell {
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "progress")
@@ -54,7 +54,7 @@ class NewsCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureUI() {
+    private func configureUI() {
         [imageView, titleLabel, subtitleLabel, interactionBackgroundView, interactionLabel].forEach {
             contentView.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BrandCell: UICollectionViewCell {
+final class BrandCell: UICollectionViewCell {
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -25,7 +25,7 @@ class BrandCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureUI() {
+    private func configureUI() {
         contentView.backgroundColor = .systemBackground
         [imageView].forEach {
             contentView.addSubview($0)

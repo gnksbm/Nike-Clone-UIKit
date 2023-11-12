@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EventCell: UICollectionViewCell {
+final class EventCell: UICollectionViewCell {
     let imageView: UIImageView = {
         let imageView = UIImageView()
         return imageView

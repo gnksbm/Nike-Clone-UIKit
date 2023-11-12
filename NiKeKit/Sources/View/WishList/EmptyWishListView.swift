@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EmptyWishListView: UIView {
+final class EmptyWishListView: UIView {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 26, weight: .medium)
@@ -42,14 +42,7 @@ class EmptyWishListView: UIView {
     }()
     
     let purchaseBtn: UIButton = {
-        var config = UIButton.Configuration.filled()
-        var titleContainer = AttributeContainer()
-        titleContainer.font = .systemFont(ofSize: 16, weight: .bold)
-        titleContainer.foregroundColor = .systemBackground
-        config.attributedTitle = AttributedString("구매하기", attributes: titleContainer)
-        config.cornerStyle = .capsule
-        config.background.backgroundColor = NikeKitAsset.accentColor.color
-        let button = UIButton(configuration: config)
+        let button = UIButton(configuration: .nikeWideBtn(title: "구매하기", fontSize: 22))
         return button
     }()
     
@@ -67,7 +60,7 @@ class EmptyWishListView: UIView {
         imageBackgroundView.layer.cornerRadius = imageBackgroundView.bounds.width / 2
     }
     
-    func configureUI() {
+    private func configureUI() {
         self.backgroundColor = .systemBackground
         [titleLabel, imageBackgroundView, imageView, messageLabel, purchaseBtn].forEach {
             self.addSubview($0)
@@ -96,7 +89,7 @@ class EmptyWishListView: UIView {
             messageLabel.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
             
             purchaseBtn.widthAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.9),
-            purchaseBtn.heightAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.16),
+            purchaseBtn.heightAnchor.constraint(equalTo: safeArea.widthAnchor, multiplier: 0.18),
             purchaseBtn.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -25),
             purchaseBtn.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
         ])

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PurchaseVC: UIViewController {
+final class PurchaseVC: UIViewController {
     private var dataSource: UICollectionViewDiffableDataSource<PurchaseSection, String>!
     private var snapshot: NSDiffableDataSourceSnapshot<PurchaseSection, String>!
     
@@ -41,7 +41,7 @@ class PurchaseVC: UIViewController {
         }
     }
     
-    func configureUI() {
+    private func configureUI() {
         view.backgroundColor = .systemBackground
         navigationController?.isNavigationBarHidden = true
         
@@ -287,26 +287,26 @@ extension PurchaseVC {
         let nearbyHeaderReg = nearbyHeaderRegistration()
         let earlyAccessHeaderReg = earlyAccessHeaderRegistration()
         
-        dataSource.supplementaryViewProvider = { _, kind, indexPath in
+        dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
             switch PurchaseSection.allCases[indexPath.section] {
             case .top:
                 if kind == UICollectionView.elementKindSectionHeader {
-                    return self.collectionView.dequeueConfiguredReusableSupplementary(using: topHeaderReg, for: indexPath)
+                    return collectionView.dequeueConfiguredReusableSupplementary(using: topHeaderReg, for: indexPath)
                 } else {
-                    return self.collectionView.dequeueConfiguredReusableSupplementary(using: topFooterReg, for: indexPath)
+                    return collectionView.dequeueConfiguredReusableSupplementary(using: topFooterReg, for: indexPath)
                 }
             case .bestCollection:
-                return self.collectionView.dequeueConfiguredReusableSupplementary(using: onlyTitleHeaderReg, for: indexPath)
+                return collectionView.dequeueConfiguredReusableSupplementary(using: onlyTitleHeaderReg, for: indexPath)
             case .recentlyViewed:
-                return self.collectionView.dequeueConfiguredReusableSupplementary(using: recentlyViewedHeaderReg, for: indexPath)
+                return collectionView.dequeueConfiguredReusableSupplementary(using: recentlyViewedHeaderReg, for: indexPath)
             case .interest:
-                return self.collectionView.dequeueConfiguredReusableSupplementary(using: interestHeaderReg, for: indexPath)
+                return collectionView.dequeueConfiguredReusableSupplementary(using: interestHeaderReg, for: indexPath)
             case .nearby:
-                return self.collectionView.dequeueConfiguredReusableSupplementary(using: nearbyHeaderReg, for: indexPath)
+                return collectionView.dequeueConfiguredReusableSupplementary(using: nearbyHeaderReg, for: indexPath)
             case .earlyAccess:
-                return self.collectionView.dequeueConfiguredReusableSupplementary(using: earlyAccessHeaderReg, for: indexPath)
+                return collectionView.dequeueConfiguredReusableSupplementary(using: earlyAccessHeaderReg, for: indexPath)
             default:
-                return self.collectionView.dequeueConfiguredReusableSupplementary(using: onlyTitleHeaderReg, for: indexPath)
+                return collectionView.dequeueConfiguredReusableSupplementary(using: onlyTitleHeaderReg, for: indexPath)
             }
         }
         updateSnapshot()

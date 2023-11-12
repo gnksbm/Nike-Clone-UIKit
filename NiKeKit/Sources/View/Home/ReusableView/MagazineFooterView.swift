@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MagazineFooterView: UICollectionReusableView {
+final class MagazineFooterView: UICollectionReusableView {
     let showBtn: UIButton = {
         var config = UIButton.Configuration.plain()
         config.baseForegroundColor = .white
@@ -30,7 +30,7 @@ class MagazineFooterView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureUI() {
+    private func configureUI() {
         self.backgroundColor = .black
         showBtn.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(showBtn)

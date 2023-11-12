@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RecommendHeaderView: UICollectionReusableView {
+final class RecommendHeaderView: UICollectionReusableView {
     let msgLabel: UILabel = {
         let label = UILabel()
         label.font =  .systemFont(ofSize: 26, weight: .medium)
@@ -52,7 +52,7 @@ class RecommendHeaderView: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureUI() {
+    private func configureUI() {
         [titleLabel, subTitleLabel].forEach {
             titleStackView.addArrangedSubview($0)
         }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WideImageCell: UICollectionViewCell {
+final class WideImageCell: UICollectionViewCell {
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleToFill
@@ -36,7 +36,7 @@ class WideImageCell: UICollectionViewCell {
         configureUI()
     }
     
-    func configureUI() {
+    private func configureUI() {
         [imageView, titleLabel].forEach {
             contentView.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
