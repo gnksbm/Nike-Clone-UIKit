@@ -54,6 +54,14 @@ final class NewsCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
+        titleLabel.text = nil
+        subtitleLabel.text = nil
+        interactionLabel.text = nil
+    }
+    
     private func configureUI() {
         [imageView, titleLabel, subtitleLabel, interactionBackgroundView, interactionLabel].forEach {
             contentView.addSubview($0)

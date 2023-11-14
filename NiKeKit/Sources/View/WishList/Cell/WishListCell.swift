@@ -44,6 +44,13 @@ final class WishListCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
+        titleLabel.text = nil
+        priceLabel.text = nil
+    }
+    
     private func configureUI() {
         [titleLabel, priceLabel].forEach {
             stackView.addArrangedSubview($0)

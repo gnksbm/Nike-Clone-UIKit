@@ -49,6 +49,13 @@ final class MagazineCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
+        titleLabel.text = nil
+        authorLabel.text = nil
+    }
+    
     private func configureUI() {
         [authorLabel, titleLabel].forEach {
             stackView.addArrangedSubview($0)

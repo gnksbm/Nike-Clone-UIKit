@@ -32,7 +32,8 @@ final class BestCollectionCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        configureUI()
+        imageView.image = nil
+        titleLabel.text = nil
     }
     
     private func configureUI() {

@@ -36,7 +36,7 @@ final class SearchTrendingCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        configureUI()
+        titleLabel.text = nil
     }
     
     private func configureUI() {

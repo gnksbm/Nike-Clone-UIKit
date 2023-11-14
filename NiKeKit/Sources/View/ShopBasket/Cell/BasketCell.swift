@@ -66,7 +66,7 @@ class BasketCell: UICollectionViewCell {
         return button
     }()
     
-    let discount: UILabel = {
+    let discountLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: UIFont.labelFontSize, weight: .medium)
         label.textColor = .gray
@@ -121,7 +121,14 @@ class BasketCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        configureUI()
+        productImageView.image = nil
+        titleLabel.text = nil
+        categoryLabel.text = nil
+        detailLabel.text = nil
+        sizeLabel.text = nil
+        discountLabel.text = nil
+        priceLabel.text = nil
+        promotionLabel.text = nil
     }
     
     private func configureUI() {
@@ -129,7 +136,7 @@ class BasketCell: UICollectionViewCell {
             infoStackView.addArrangedSubview($0)
         }
         
-        [quantityBtn, discount, priceLabel].forEach {
+        [quantityBtn, discountLabel, priceLabel].forEach {
             priceStackView.addArrangedSubview($0)
         }
         

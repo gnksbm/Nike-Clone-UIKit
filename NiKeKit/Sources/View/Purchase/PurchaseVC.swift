@@ -314,8 +314,8 @@ extension PurchaseVC {
     
     private func categorySelectRegistration() -> UICollectionView.CellRegistration<CategorySelectCell, String> {
         return .init { cell, indexPath, title in
-            cell.label.text = title
-            cell.label.textColor = indexPath.row == self.viewModel.selectionTag ? NikeKitAsset.accentColor.color : .gray
+            cell.categorylabel.text = title
+            cell.categorylabel.textColor = indexPath.row == self.viewModel.selectionTag ? NikeKitAsset.accentColor.color : .gray
             cell.underLineView.isHidden = indexPath.row != self.viewModel.selectionTag
         }
     }

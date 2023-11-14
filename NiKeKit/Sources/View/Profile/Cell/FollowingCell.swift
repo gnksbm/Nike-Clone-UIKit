@@ -23,6 +23,11 @@ class FollowingCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
+    }
+    
     private func configureUI() {
         [imageView].forEach {
             contentView.addSubview($0)

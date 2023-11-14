@@ -9,7 +9,7 @@
 import UIKit
 
 final class CategorySelectCell: UICollectionViewCell {
-    let label: UILabel = {
+    let categorylabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: UIFont.labelFontSize, weight: .medium)
         label.textColor = .darkGray
@@ -38,15 +38,15 @@ final class CategorySelectCell: UICollectionViewCell {
     }
     
     private func configureUI() {
-        [label, underLineView].forEach {
+        [categorylabel, underLineView].forEach {
             contentView.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            label.widthAnchor.constraint(equalTo: contentView.widthAnchor),
-            label.heightAnchor.constraint(equalTo: contentView.heightAnchor),
+            categorylabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            categorylabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            categorylabel.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            categorylabel.heightAnchor.constraint(equalTo: contentView.heightAnchor),
             
             underLineView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             underLineView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),

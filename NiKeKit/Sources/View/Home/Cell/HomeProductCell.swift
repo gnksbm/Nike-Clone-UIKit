@@ -52,6 +52,14 @@ final class HomeProductCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
+        titleLabel.text = nil
+        categoryLabel.text = nil
+        priceLabel.text = nil
+    }
+    
     private func configureUI() {
         [titleLabel, categoryLabel, priceLabel].forEach {
             stackView.addArrangedSubview($0)

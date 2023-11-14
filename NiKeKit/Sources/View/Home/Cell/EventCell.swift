@@ -50,6 +50,13 @@ final class EventCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
+        titleLabel.text = nil
+        contentLabel.text = nil
+    }
+    
     func configureUI() {
         [titleLabel, contentLabel].forEach {
             stackView.addArrangedSubview($0)
