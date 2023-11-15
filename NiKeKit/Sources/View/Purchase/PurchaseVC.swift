@@ -250,7 +250,8 @@ extension PurchaseVC {
         dataSource = .init(collectionView: collectionView) { collectionView, indexPath, item in
             switch PurchaseSection.allCases[indexPath.section] {
             case .top:
-                return collectionView.dequeueConfiguredReusableCell(using: categorySelectReg, for: indexPath, item: item)
+                let category = ProductCategory.allCases[indexPath.row]
+                return collectionView.dequeueConfiguredReusableCell(using: categorySelectReg, for: indexPath, item: category)
             case .bestCollection:
                 return collectionView.dequeueConfiguredReusableCell(using: bestCollectionReg, for: indexPath, item: item)
             case .wideImage:
@@ -312,9 +313,9 @@ extension PurchaseVC {
         updateSnapshot()
     }
     
-    private func categorySelectRegistration() -> UICollectionView.CellRegistration<CategorySelectCell, String> {
-        return .init { cell, indexPath, title in
-            cell.categorylabel.text = title
+    private func categorySelectRegistration() -> UICollectionView.CellRegistration<CategorySelectCell, ProductCategory> {
+        return .init { cell, indexPath, category in
+            cell.categorylabel.text = category.toString
             cell.categorylabel.textColor = indexPath.row == self.viewModel.selectionTag ? NikeKitAsset.accentColor.color : .gray
             cell.underLineView.isHidden = indexPath.row != self.viewModel.selectionTag
         }

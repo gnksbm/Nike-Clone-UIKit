@@ -223,19 +223,20 @@ extension HomeVC {
         dataSource = .init(collectionView: collectionView) { collectionView, indexPath, id in
             switch HomeSection.allCases[indexPath.section] {
             case .recommend, .relation:
-                let cell = collectionView.dequeueConfiguredReusableCell(using: productReg, for: indexPath, item: id)
-                return cell
+                let product = self.viewModel.product(id: id)
+                return collectionView.dequeueConfiguredReusableCell(using: productReg, for: indexPath, item: product)
             case .event:
-                let cell = collectionView.dequeueConfiguredReusableCell(using: eventReg, for: indexPath, item: id)
-                return cell
+                let event = self.viewModel.event(id: id)
+                return collectionView.dequeueConfiguredReusableCell(using: eventReg, for: indexPath, item: event)
             case .news:
-                let cell = collectionView.dequeueConfiguredReusableCell(using: newsReg, for: indexPath, item: id)
-                return cell
+                let news = self.viewModel.news(id: id)
+                return collectionView.dequeueConfiguredReusableCell(using: newsReg, for: indexPath, item: news)
             case .magazine:
-                let cell = collectionView.dequeueConfiguredReusableCell(using: magazineReg, for: indexPath, item: id)
-                return cell
+                let magazine = self.viewModel.magazine(id: id)
+                return collectionView.dequeueConfiguredReusableCell(using: magazineReg, for: indexPath, item: magazine)
             case .last:
-                let cell = collectionView.dequeueConfiguredReusableCell(using: magazineReg, for: indexPath, item: id)
+                let magazine = self.viewModel.magazine(id: id)
+                let cell = collectionView.dequeueConfiguredReusableCell(using: magazineReg, for: indexPath, item: magazine)
                 return cell
             }
         }
@@ -267,43 +268,39 @@ extension HomeVC {
         updateSnapshot()
     }
     
-    private func productRegistration() -> UICollectionView.CellRegistration<HomeProductCell, String> {
-        return .init { cell, _, id in
-            let product = self.viewModel.products.first(where: { $0.id == id })
-            if let image = product?.images.first {
+    private func productRegistration() -> UICollectionView.CellRegistration<HomeProductCell, Product> {
+        return .init { cell, _, product in
+            if let image = product.images.first {
                 cell.imageView.image = image
             }
-            cell.titleLabel.text = product?.name
-            cell.categoryLabel.text = product?.category.toString
-            cell.priceLabel.text = product?.price.toPriceStr
+            cell.titleLabel.text = product.name
+            cell.categoryLabel.text = product.category.toString
+            cell.priceLabel.text = product.price.toPriceStr
         }
     }
     
-    private func eventRegistration() -> UICollectionView.CellRegistration<EventCell, String> {
-        return .init { cell, _, id in
-            let event = self.viewModel.events.first(where: { $0.id == id })
-                cell.imageView.image = event?.image
-            cell.titleLabel.text = event?.title
-            cell.contentLabel.text = event?.content
+    private func eventRegistration() -> UICollectionView.CellRegistration<EventCell, Event> {
+        return .init { cell, _, event in
+            cell.imageView.image = event.image
+            cell.titleLabel.text = event.title
+            cell.contentLabel.text = event.content
         }
     }
     
-    private func newsRegistration() -> UICollectionView.CellRegistration<NewsCell, String> {
-        return .init { cell, _, id in
-            let news = self.viewModel.news.first(where: { $0.id == id })
-            cell.imageView.image = news?.image
-            cell.titleLabel.text = news?.title
-            cell.subtitleLabel.text = news?.subtitle
-            cell.interactionLabel.text = news?.interaction
+    private func newsRegistration() -> UICollectionView.CellRegistration<NewsCell, News> {
+        return .init { cell, _, news in
+            cell.imageView.image = news.image
+            cell.titleLabel.text = news.title
+            cell.subtitleLabel.text = news.subtitle
+            cell.interactionLabel.text = news.interaction
         }
     }
     
-    private func magazineRegistration() -> UICollectionView.CellRegistration<MagazineCell, String> {
-        return .init { cell, _, id in
-            let magazine = self.viewModel.magazines.first(where: { $0.id == id })
-            cell.imageView.image = magazine?.image
-            cell.authorLabel.text = magazine?.author
-            cell.titleLabel.text = magazine?.title
+    private func magazineRegistration() -> UICollectionView.CellRegistration<MagazineCell, Magazine> {
+        return .init { cell, _, magazine in
+            cell.imageView.image = magazine.image
+            cell.authorLabel.text = magazine.author
+            cell.titleLabel.text = magazine.title
         }
     }
     

@@ -22,8 +22,6 @@ final class HomeViewModel {
         Array(products.prefix(3))
     }
     
-    private var onComplete: () -> Void = { }
-    
     var titleMessage: String {
         let now: Date = Date()
         let dateFormatter = DateFormatter()
@@ -45,6 +43,24 @@ final class HomeViewModel {
         }
 
         return message
+    }
+    
+    private var onComplete: () -> Void = { }
+    
+    func product(id: String) -> Product? {
+        return products.first(where: { $0.id == id })
+    }
+    
+    func event(id: String) -> Event? {
+        return events.first(where: { $0.id == id })
+    }
+    
+    func news(id: String) -> News? {
+        return news.first(where: { $0.id == id })
+    }
+    
+    func magazine(id: String) -> Magazine? {
+        return magazines.first(where: { $0.id == id })
     }
     
     func fetchProducts() {

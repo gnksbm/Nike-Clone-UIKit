@@ -14,6 +14,10 @@ final class ProfileViewModel {
     
     private var onComplete: () -> Void = { }
     
+    func product(id: String) -> Product? {
+        return products.first(where: { $0.id == id })
+    }
+    
     func fetchProducts() {
         products = [.sample1, .sample2, .sample3, .sample4, .sample5, .sample6]
         onComplete()

@@ -146,14 +146,16 @@ extension ProfileVC {
         let interactionReg = interactionRegistration()
         let followingReg = followingRegistration()
         
-        dataSource = .init(collectionView: profileCV) { collectionView, indexPath, item in
+        dataSource = .init(collectionView: profileCV) { collectionView, indexPath, id in
             switch ProfileSection.allCases[indexPath.section] {
             case .main:
-                return collectionView.dequeueConfiguredReusableCell(using: mainReg, for: indexPath, item: item)
+                return collectionView.dequeueConfiguredReusableCell(using: mainReg, for: indexPath, item: self.viewModel.user)
             case .interaction:
-                return collectionView.dequeueConfiguredReusableCell(using: interactionReg, for: indexPath, item: item)
+                let interaction = Interaction.allCases[indexPath.row]
+                return collectionView.dequeueConfiguredReusableCell(using: interactionReg, for: indexPath, item: interaction)
             case .following:
-                return collectionView.dequeueConfiguredReusableCell(using: followingReg, for: indexPath, item: item)
+                let product = self.viewModel.product(id: id)
+                return collectionView.dequeueConfiguredReusableCell(using: followingReg, for: indexPath, item: product)
             }
         }
         
@@ -178,15 +180,14 @@ extension ProfileVC {
         updateSnapshot()
     }
     
-    private func mainRegistration() -> UICollectionView.CellRegistration<ProfileMainCell, String> {
-        return .init { cell, _, _ in
-            cell.profileImgBtn.setImage(self.viewModel.user.image, for: .normal)
+    private func mainRegistration() -> UICollectionView.CellRegistration<ProfileMainCell, User> {
+        return .init { cell, _, user in
+            cell.profileImgBtn.setImage(user.image, for: .normal)
         }
     }
     
-    private func interactionRegistration() -> UICollectionView.CellRegistration<ProfileInteractionCell, String> {
-        return .init { cell, indexPath, _ in
-            let interaction = Interaction.allCases[indexPath.row]
+    private func interactionRegistration() -> UICollectionView.CellRegistration<ProfileInteractionCell, Interaction> {
+        return .init { cell, _, interaction in
             cell.titleLabel.text = interaction.title
             cell.subtitleLabel.text = interaction.subtitle
             switch interaction {
@@ -198,9 +199,9 @@ extension ProfileVC {
         }
     }
     
-    private func followingRegistration() -> UICollectionView.CellRegistration<FollowingCell, String> {
-        return .init { cell, _, id in
-            if let image = self.viewModel.products.first(where: { $0.id == id })?.images.first {
+    private func followingRegistration() -> UICollectionView.CellRegistration<FollowingCell, Product> {
+        return .init { cell, _, product in
+            if let image = product.images.first {
                 cell.imageView.image = image
             }
         }
@@ -236,7 +237,7 @@ extension ProfileVC {
         sections.forEach {
             switch $0 {
             case .main:
-                snapshot.appendItems(["1"], toSection: $0)
+                snapshot.appendItems(["main"], toSection: $0)
             case .interaction:
                 snapshot.appendItems(Interaction.allCases.map({ $0.title }), toSection: $0)
             case .following:
